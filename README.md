@@ -1,3 +1,64 @@
+**Minor Life Support Fixes by Privex:**
+
+ - Locked `pendulum` version, as versions newer than 1.5 are not compatible
+ - Swapped paid GeoIP2 web service for free GeoLite2 database files (install mmdb's into `/usr/local/var/GeoIP/`)
+ - Removed binary check, allowing for connections to existing Steem nodes not auto-managed by `bts_tools`
+ - Added `simple_config.yaml` - for a basic Steem seed node monitor, copy into `~/.bts_tools/config.yaml`
+
+The `simple_config.yaml` is pre-configured to connect to Steem's websocket port on `127.0.0.1:8090` and look for Steem's 
+data in ~/steem-docker/data - adjust if needed.
+
+For full functionality, you must run a `cli_wallet` http server, like so:
+
+```
+cli_wallet -s 'ws://127.0.0.1:8090' -H '127.0.0.1:8493' --rpc-http-allowip '127.0.0.1'
+```
+
+If using @someguy123's Steem-in-a-box, you can launch a background `cli_wallet` inside of docker by running :
+
+```
+docker run -p 127.0.0.1:8493:8493 --rm --name wallet -v "/steem/data/":/steem --link seed -itd steem cli_wallet -s 'ws://seed:8090' -H '0.0.0.0:8493' --rpc-http-allowip '172.17.0.1'
+```
+
+(assumes steem is running in container named `seed`, and steem data dir is at /steem/data on host system)
+
+**To install:**
+
+```
+# Install Python 3.6 and pip
+sudo apt install -y python3.6 python3.6-dev python3-pip
+# Install the wheel package and maxminddb to avoid some issues
+sudo pip3 install wheel maxminddb
+
+# Install GeoLite2-City
+sudo mkdir -p /usr/local/var/GeoIP/
+cd /tmp
+wget -q http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
+tar xf GeoLite2-City.tar.gz
+sudo cp -v GeoLite2-City_*/GeoLite2-City.mmdb /usr/local/var/GeoIP/
+
+# Clone repo and install bts_tools locally under your user account
+git clone https://github.com/Privex/bts_tools
+cd bts_tools
+python3 setup.py install --user
+
+```
+
+**To launch web UI on port 5000**
+
+```
+export PATH="${HOME}/.local/bin:${PATH}"
+steem monitor
+```
+
+Above instructions tested on Ubuntu 18.04 with Python 3.6
+
+
+**--- End Privex Life Support Update ---**
+
+
+--------
+
 BitShares delegate tools
 ------------------------
 
