@@ -1,0 +1,31 @@
+---
+# For a more detailed description of the format of this file, visit:
+# https://bts-tools.readthedocs.io/en/latest/config_yaml.html
+#
+
+hostname: xxxxxxxx  # [OPTIONAL] label used as source of notification messages
+
+# the logging levels for the different submodules
+# can be any of DEBUG, INFO, WARNING, ERROR
+logging:
+    bts_tools.cmdline: DEBUG
+    bts_tools.feeds: INFO
+#
+# list of clients (witness accounts / seed nodes) that are being monitored
+#
+# the following file tries to keep a balanced distribution of the options between each client
+# in order to make for easier reading, but (unless otherwise noted) all the options declared
+# in a client also apply in the other ones
+#
+clients:
+    steem:
+        type: steem
+        data_dir: ~/steem-docker/data
+        p2p_port: 2001
+        witness_host: 127.0.0.1
+        witness_port: 8090
+        wallet_host: 127.0.0.1
+        wallet_port: 8493
+        roles:
+            - role: seed
+              name: myseed

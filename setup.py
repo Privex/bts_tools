@@ -33,7 +33,7 @@ install_requires = ['Flask', 'requests', 'psutil', 'pyyaml', 'dogpile.cache',
                     'beautifulsoup4', 'maxminddb-geolite2', 'autobahn', 'ruamel.yaml',
                     'doit', 'retrying', 'ecdsa', 'cachetools', 'wrapt',
                     'geoip2', # for ip addr -> lat, lon  (need account on maxmind)
-                    'pendulum', 'bitcoinaverage'
+                    'pendulum==1.5.0', 'bitcoinaverage'
                     ]
 
 setup_requires = []
