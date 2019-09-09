@@ -84,8 +84,9 @@ def copy_cached_value(wrapped, instance, args, kwargs):
 @cachetools.func.lfu_cache(8192)
 def get_geoip_info(ip_addr):
     try:
-        cred = core.config.get('credentials', {})['geoip2']  # check that we have a geoip2 section in config.yaml
-        client = geoip2.webservice.Client(cred['user'], cred['password'])
+        #cred = core.config.get('credentials', {})['geoip2']  # check that we have a geoip2 section in config.yaml
+        #client = geoip2.webservice.Client(cred['user'], cred['password'])
+        client = geoip2.database.Reader('/usr/local/var/GeoIP/GeoLite2-City.mmdb')
     except KeyError as e:
         raise ValueError('No geoip2 user and password defined in config.yaml') from e
 

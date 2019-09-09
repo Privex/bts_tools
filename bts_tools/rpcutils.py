@@ -166,14 +166,6 @@ class GrapheneClient(object):
             # we want to avoid connecting to the client and block because
             # it is in a stopped state (eg: in gdb after having crashed)
 
-
-            if self.witness_host is not None and self.witness_port is not None:
-                # check pre-emptively whether the witness client is running to avoid timeouts on the rpc call
-                # TODO: verify we do indeed have timeouts
-                if (client_name in core.config.get('clients', []) and
-                    self.is_localhost() and not bts_binary_running(self)):
-                    raise RPCError('Connection aborted: {} binary does not seem to be running'.format(self.type()))
-
             if self.proxy_host is not None and self.proxy_port is not None:
                 return rpc_call(self.proxy_host, self.proxy_port,
                                 None, None,
